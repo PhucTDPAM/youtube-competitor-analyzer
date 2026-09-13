@@ -1,0 +1,137 @@
+:root {
+  --bg: #0f1115;
+  --card: #171a21;
+  --border: #2a2e37;
+  --text: #e6e8eb;
+  --text-dim: #9aa1ac;
+  --accent: #ff3b3b;
+  --accent-hover: #e02e2e;
+  --success: #2ecc71;
+  --warning: #f5a623;
+  --error: #ff5c5c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 24px 16px 64px;
+}
+
+.screen { max-width: 1100px; margin: 0 auto; }
+
+header { margin-bottom: 20px; }
+h1 { font-size: 1.6rem; margin: 0 0 4px; }
+h2 { font-size: 1.2rem; margin: 0 0 12px; }
+.sub { color: var(--text-dim); margin: 0; font-size: 0.9rem; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.card.narrow { max-width: 380px; margin: 80px auto; }
+
+label { display: block; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 6px; }
+label.mt { margin-top: 16px; }
+label.inline { display: inline-flex; align-items: center; gap: 6px; color: var(--text); margin-bottom: 8px; }
+
+input[type="text"], input[type="password"], input[type="number"] {
+  width: 100%;
+  background: #0f1115;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+input[type="number"] { max-width: 140px; }
+input:disabled { opacity: 0.4; }
+
+button {
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: #20242c;
+  color: var(--text);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  font-weight: 600;
+}
+button.primary:hover { background: var(--accent-hover); }
+button.primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.mt { margin-top: 16px; }
+
+.checkbox-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.checkbox-row label {
+  display: flex; align-items: center; gap: 6px;
+  color: var(--text); font-size: 0.9rem; margin: 0;
+  background: #0f1115; border: 1px solid var(--border);
+  padding: 6px 10px; border-radius: 8px;
+}
+
+.row { display: flex; flex-wrap: wrap; gap: 32px; }
+.col { flex: 1; min-width: 220px; }
+
+.error { color: var(--error); font-size: 0.85rem; min-height: 1em; margin-top: 8px; }
+.warning {
+  background: rgba(245, 166, 35, 0.12);
+  border: 1px solid var(--warning);
+  color: var(--warning);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+.metrics { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 16px; }
+.metric span { display: block; font-size: 1.4rem; font-weight: 700; }
+.metric label { margin: 0; }
+
+.progress-bar {
+  width: 100%; height: 10px; background: #0f1115;
+  border-radius: 6px; overflow: hidden; border: 1px solid var(--border);
+}
+#progress-fill { height: 100%; width: 0%; background: var(--accent); transition: width 0.2s; }
+#progress-text { font-size: 0.85rem; color: var(--text-dim); margin-top: 6px; }
+
+.tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--border); margin: 16px 0; }
+.tab-btn { background: none; border: none; padding: 10px 4px; color: var(--text-dim); border-bottom: 2px solid transparent; border-radius: 0; }
+.tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.table-wrap { max-height: 480px; overflow: auto; border: 1px solid var(--border); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.82rem; }
+th, td {
+  padding: 8px 10px; border-bottom: 1px solid var(--border);
+  text-align: left; white-space: nowrap; max-width: 320px;
+  overflow: hidden; text-overflow: ellipsis;
+}
+th { position: sticky; top: 0; background: #1c2029; }
+td.wrap { white-space: normal; }
+
+.copy-box { margin-bottom: 14px; }
+.copy-box-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.copy-box-head span { font-size: 0.9rem; color: var(--text-dim); }
+.copy-box textarea {
+  width: 100%; height: 140px; background: #0f1115; color: var(--text);
+  border: 1px solid var(--border); border-radius: 8px; padding: 10px; font-size: 0.8rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  resize: vertical;
+}
+
+@media (max-width: 480px) {
+  .card.narrow { margin: 40px auto; }
+  .metrics { gap: 16px; }
+}

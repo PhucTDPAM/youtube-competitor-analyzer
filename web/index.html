@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Competitor Analyzer</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<div id="login-screen" class="screen">
+  <div class="card narrow">
+    <h1>Đăng nhập</h1>
+    <label>Mật khẩu truy cập</label>
+    <input type="password" id="login-password" placeholder="Nhập mật khẩu">
+    <button id="login-btn" class="primary">Vào ứng dụng</button>
+    <p id="login-error" class="error"></p>
+  </div>
+</div>
+
+<div id="app-screen" class="screen" hidden>
+  <header>
+    <h1>Phân tích kênh YouTube đối thủ</h1>
+    <p class="sub">Lấy ngày đăng, tiêu đề, mô tả, comment, like, từ khoá kênh, từ khoá video qua YouTube Data API v3.</p>
+  </header>
+
+  <section class="card">
+    <label>Link kênh / @handle / Channel ID của đối thủ</label>
+    <input type="text" id="channel-input" placeholder="https://www.youtube.com/@tenkenh hoặc @tenkenh">
+
+    <label class="mt">Chọn trường dữ liệu muốn lấy</label>
+    <div id="field-options" class="checkbox-row"></div>
+
+    <div class="row mt">
+      <div class="col">
+        <label class="inline"><input type="checkbox" id="limit-videos"> Giới hạn số video</label>
+        <input type="number" id="max-videos" value="50" min="1" disabled>
+      </div>
+      <div class="col">
+        <label class="inline"><input type="checkbox" id="include-replies"> Lấy cả reply</label>
+        <label class="inline"><input type="checkbox" id="limit-comments"> Giới hạn comment/video</label>
+        <input type="number" id="max-comments" value="300" min="10" disabled>
+      </div>
+    </div>
+
+    <button id="scan-btn" class="primary mt">1. Tìm kênh & Quét quy mô</button>
+    <p id="scan-error" class="error"></p>
+  </section>
+
+  <section id="scan-result" class="card" hidden>
+    <h2 id="scan-channel-title"></h2>
+    <div class="metrics">
+      <div class="metric"><span id="m-sub"></span><label>Subscriber</label></div>
+      <div class="metric"><span id="m-total-videos"></span><label>Tổng video kênh</label></div>
+      <div class="metric"><span id="m-scan-videos"></span><label>Video sẽ lấy</label></div>
+      <div class="metric"><span id="m-est-comments"></span><label>Ước tính tổng comment</label></div>
+    </div>
+    <p id="quota-warning" class="warning" hidden></p>
+    <button id="fetch-btn" class="primary">2. Lấy dữ liệu & Xuất Excel</button>
+    <div id="progress-wrap" class="mt" hidden>
+      <div class="progress-bar"><div id="progress-fill"></div></div>
+      <p id="progress-text"></p>
+    </div>
+  </section>
+
+  <section id="result" class="card" hidden>
+    <h2 id="result-title"></h2>
+    <p id="result-summary"></p>
+    <button id="download-btn" class="primary">Tải file Excel kết quả</button>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="tab-kenh">Kênh</button>
+      <button class="tab-btn" data-tab="tab-video">Video</button>
+      <button class="tab-btn" data-tab="tab-comment">Comment</button>
+    </div>
+    <div id="tab-kenh" class="tab-content active"><div class="table-wrap"><table id="table-kenh"></table></div></div>
+    <div id="tab-video" class="tab-content"><div class="table-wrap"><table id="table-video"></table></div></div>
+    <div id="tab-comment" class="tab-content"><div class="table-wrap"><table id="table-comment"></table></div></div>
+
+    <h2 class="mt">Sao chép nhanh</h2>
+    <p class="sub">Bấm nút "Copy" để copy toàn bộ nội dung trường đó.</p>
+    <div id="copy-boxes"></div>
+  </section>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
