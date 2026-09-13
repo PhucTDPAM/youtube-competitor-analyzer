@@ -1,11 +1,13 @@
 import os
 import re
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from werkzeug.exceptions import HTTPException
 
 app = Flask(__name__)
+STATIC_DIR = os.path.dirname(os.path.abspath(__file__))
 
 CHANNEL_ID_RE = re.compile(r"^UC[a-zA-Z0-9_-]{22}$")
 
@@ -72,9 +74,23 @@ def resolve_channel(youtube, channel_input: str):
 
 @app.errorhandler(Exception)
 def handle_error(e):
+    if isinstance(e, HTTPException):
+        return e
     if isinstance(e, HttpError):
         return jsonify({"error": f"Loi YouTube API: {e}"}), 502
     return jsonify({"error": str(e)}), 500
+
+
+@app.route("/")
+def index():
+    return send_from_directory(STATIC_DIR, "index.html")
+
+
+@app.route("/<path:filename>")
+def static_files(filename):
+    if filename.startswith("api/"):
+        return jsonify({"error": "Not found"}), 404
+    return send_from_directory(STATIC_DIR, filename)
 
 
 def require_password():
